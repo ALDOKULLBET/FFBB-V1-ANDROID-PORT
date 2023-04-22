@@ -26,6 +26,24 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 
+#if desktop
+import Discord.DiscordClient;
+#end
+
+//crash handler stuff
+#if CRASH_HANDLER
+import openfl.events.UncaughtErrorEvent;
+import haxe.CallStack;
+import haxe.io.Path;
+import sys.FileSystem;
+import sys.io.File;
+import sys.io.Process;
+#end
+
+using StringTools;
+
+class Main extends Sprite
+
 // Here we actually import the states and metadata, and just the metadata.
 // It's nice to have modularity so that we don't have ALL elements loaded at the same time.
 // at least that's how I think it works. I could be stupid!
@@ -110,6 +128,8 @@ class Main extends Sprite
 	{
 		super();
 
+   SUtil.gameCrashCheck();
+
 		/**
 			ok so, haxe html5 CANNOT do 120 fps. it just cannot.
 			so here i just set the framerate to 60 if its complied in html5.
@@ -140,6 +160,8 @@ class Main extends Sprite
 			// this just kind of sets up the camera zoom in accordance to the surface width and camera zoom.
 			// if set to negative one, it is done so automatically, which is the default.
 		}
+
+                SUtil.doTheCheck();
 
 		FlxTransitionableState.skipNextTransIn = true;
 		
